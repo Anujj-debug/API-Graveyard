@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { API_STATUSES } from "../../../shared/constants/status.constants.js";
 
 const statusReportSchema = new mongoose.Schema(
   {
@@ -16,16 +17,7 @@ const statusReportSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: [
-        "Active",
-        "Stable",
-        "Unstable",
-        "Deprecated",
-        "Dead",
-        "Maintenance",
-        "Acquired",
-        "Rate-Limited",
-      ],
+      enum: API_STATUSES,
       required: true,
     },
 

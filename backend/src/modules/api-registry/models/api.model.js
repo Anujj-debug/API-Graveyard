@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { API_STATUSES } from "../../../shared/constants/status.constants.js";
 
 const apiSchema = new mongoose.Schema(
   {
@@ -62,30 +63,12 @@ const apiSchema = new mongoose.Schema(
 
     officialStatus: {
       type: String,
-      enum: [
-        "Active",
-        "Stable",
-        "Unstable",
-        "Deprecated",
-        "Dead",
-        "Maintenance",
-        "Acquired",
-        "Rate-Limited",
-      ],
+      enum: API_STATUSES,
       default: "Active",
     },
     communityStatus: {
       type: String,
-      enum: [
-        "Active",
-        "Stable",
-        "Unstable",
-        "Deprecated",
-        "Dead",
-        "Maintenance",
-        "Acquired",
-        "Rate-Limited",
-      ],
+      enum: API_STATUSES,
       default: "Active",
     },
 
