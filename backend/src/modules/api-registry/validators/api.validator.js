@@ -32,7 +32,7 @@ export const createAPISchema = z.object({
     "Unknown",
   ]),
 
-  status: z.enum([
+  officialStatus: z.enum([
     "Active",
     "Stable",
     "Unstable",

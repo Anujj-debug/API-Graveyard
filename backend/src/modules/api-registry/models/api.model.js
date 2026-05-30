@@ -60,7 +60,21 @@ const apiSchema = new mongoose.Schema(
       default: "Unknown",
     },
 
-    status: {
+    officialStatus: {
+      type: String,
+      enum: [
+        "Active",
+        "Stable",
+        "Unstable",
+        "Deprecated",
+        "Dead",
+        "Maintenance",
+        "Acquired",
+        "Rate-Limited",
+      ],
+      default: "Active",
+    },
+    communityStatus: {
       type: String,
       enum: [
         "Active",
@@ -110,7 +124,7 @@ const apiSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const API = mongoose.model("API", apiSchema);

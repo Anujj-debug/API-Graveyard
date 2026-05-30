@@ -26,7 +26,7 @@ export const getAllAPIsService = async (
   const {
     search,
     category,
-    status,
+    officialStatus,
     page = 1,
     limit = 10,
   } = queryParams;
@@ -46,8 +46,8 @@ export const getAllAPIsService = async (
     query.category = category;
   }
 
-  if (status) {
-    query.status = status;
+  if (officialStatus) {
+    query.officialStatus = officialStatus;
   }
 
   const totalAPIs = await API.countDocuments(query);
