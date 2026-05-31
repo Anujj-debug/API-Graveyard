@@ -1,9 +1,6 @@
 import API from "../models/api.model.js";
 
-export const createAPIService = async (
-  apiData,
-  userId
-) => {
+export const createAPIService = async (apiData, userId) => {
   const existingAPI = await API.findOne({
     slug: apiData.slug,
   });
@@ -20,9 +17,7 @@ export const createAPIService = async (
   return api;
 };
 
-export const getAllAPIsService = async (
-  queryParams
-) => {
+export const getAllAPIsService = async (queryParams) => {
   const {
     search,
     category,
@@ -68,15 +63,22 @@ export const getAllAPIsService = async (
   };
 };
 
-export const getSingleAPIService = async (
-  apiId
-) => {
-  const api = await API.findById(apiId).populate(
-    "addedBy",
-    "username email"
-  );
+export const getSingleAPIService = async (apiId) => {
+  const api = await API.findById(apiId).populate("addedBy", "username email");
   if (!api) {
     throw new Error("API not found");
   }
   return api;
 };
+
+export const getTrendingAPIsService =
+  async () => {
+    const apis = await API.find()
+      .sort({
+        reviewCount: -1,
+        averageRating: -1,
+      })
+      .limit(10);
+
+    return apis;
+  };

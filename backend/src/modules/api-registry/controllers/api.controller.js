@@ -1,11 +1,13 @@
-import { createAPIService, getAllAPIsService, getSingleAPIService } from "../services/api.service.js";
+import {
+  createAPIService,
+  getAllAPIsService,
+  getSingleAPIService,
+  getTrendingAPIsService,
+} from "../services/api.service.js";
 
 export const createAPI = async (req, res) => {
   try {
-    const api = await createAPIService(
-      req.body,
-      req.user.userId
-    );
+    const api = await createAPIService(req.body, req.user.userId);
 
     res.status(201).json({
       message: "API created successfully",
@@ -20,9 +22,7 @@ export const createAPI = async (req, res) => {
 
 export const getAllAPIs = async (req, res) => {
   try {
-    const data = await getAllAPIsService(
-      req.query
-    );
+    const data = await getAllAPIsService(req.query);
 
     res.status(200).json(data);
   } catch (error) {
@@ -32,17 +32,27 @@ export const getAllAPIs = async (req, res) => {
   }
 };
 
-export const getSingleAPI = async (
-  req,
-  res
-) => {
+export const getSingleAPI = async (req, res) => {
   try {
-    const api = await getSingleAPIService(
-      req.params.id
-    );
+    const api = await getSingleAPIService(req.params.id);
     res.status(200).json(api);
   } catch (error) {
     res.status(404).json({
+      message: error.message,
+    });
+  }
+};
+
+export const getTrendingAPIs = async (req, res) => {
+  try {
+    const apis = await getTrendingAPIsService();
+
+    res.status(200).json({
+      count: apis.length,
+      apis,
+    });
+  } catch (error) {
+    res.status(500).json({
       message: error.message,
     });
   }
