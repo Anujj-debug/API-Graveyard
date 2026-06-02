@@ -1,22 +1,16 @@
-# Frontend Structure
+# React + Vite
 
-Frontend is organized for a modern developer SaaS UI:
-- Route-level pages are thin.
-- Feature folders own API calls + query hooks + UI pieces.
-- Shared UI primitives live in `components/ui`.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Centralized API handling
+Currently, two official plugins are available:
 
-`src/lib/api/` is where the Axios client lives.
-This keeps base URL, headers, auth token injection, and error shaping consistent.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Centralized query handling
+## React Compiler
 
-`src/lib/query/` is where the TanStack Query client + query keys live.
-Feature folders define query hooks but reuse shared clients and key factories.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Route protection
+## Expanding the ESLint configuration
 
-Protected routes belong in `src/app/routes/` (guards/wrappers) and `src/features/auth/` (session state).
-
-No implementation has been added yet.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
