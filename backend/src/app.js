@@ -1,9 +1,11 @@
+import cors from "cors";
 import express from "express";
 import authRoutes from "./modules/auth/routes/auth.routes.js";
 import apiRoutes from "./modules/api-registry/routes/api.routes.js";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
