@@ -1,9 +1,11 @@
+import HeroSection from "@/features/registry/components/hero-section";
+import TrendingSection from "@/features/registry/components/trending-section";
+
 export default function HomePage() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-6xl font-bold">
-        API Graveyard
-      </h1>
-    </div>
+    <>
+      <HeroSection />
+      <TrendingSection />
+    </>
   );
 }
