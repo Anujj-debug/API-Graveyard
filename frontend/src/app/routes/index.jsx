@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import RootLayout from "@/layouts/root-layout";
 import HomePage from "@/pages/home-page";
+import APIDetailsPage from "@/pages/api-details-page";
 
 const router = createBrowserRouter([
   {
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "apis/:id",
+        element: <APIDetailsPage />,
       },
     ],
   },

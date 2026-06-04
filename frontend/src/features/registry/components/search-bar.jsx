@@ -1,10 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { useSearchAPIs } from "../hooks/use-search-apis";
+import { Link } from "react-router-dom";
 
 export default function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data, isLoading } = useSearchAPIs(searchTerm);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchTerm);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [searchTerm]);
+
+  const { data, isLoading } = useSearchAPIs(debouncedSearch);
 
   return (
     <div className="mx-auto max-w-2xl">
@@ -19,9 +31,13 @@ export default function SearchBar() {
       {data?.apis?.length > 0 && (
         <div className="mt-4 rounded-lg border">
           {data.apis.map((api) => (
-            <div key={api._id} className="border-b p-3">
+            <Link
+              key={api._id}
+              to={`/apis/${api._id}`}
+              className="block border-b p-3 hover:bg-muted"
+            >
               {api.name}
-            </div>
+            </Link>
           ))}
         </div>
       )}
