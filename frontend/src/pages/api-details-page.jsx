@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useAPI } from "@/features/registry/hooks/use-api";
+import ReviewsSection from "@/features/reviews/components/reviews-section";
+import ReviewForm from "@/features/reviews/components/review-form";
 
 export default function APIDetailsPage() {
   const { id } = useParams();
@@ -42,6 +44,9 @@ export default function APIDetailsPage() {
           <strong>Average Rating:</strong> {data.averageRating}
         </p>
       </div>
+
+      <ReviewForm apiId={id} />
+      <ReviewsSection apiId={id} />
     </div>
   );
 }
