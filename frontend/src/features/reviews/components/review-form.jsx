@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useCreateReview } from "../hooks/use-create-review";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ReviewForm({ apiId }) {
   const [formData, setFormData] = useState({
@@ -22,31 +25,38 @@ export default function ReviewForm({ apiId }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mt-10 space-y-4">
-      <input
-        type="text"
-        placeholder="Title"
-        value={formData.title}
-        onChange={(e) =>
-          setFormData({
-            ...formData,
-            title: e.target.value,
-          })
-        }
-      />
+    <Card className="mt-10">
+      <CardHeader>
+        <CardTitle>Write a Review</CardTitle>
+      </CardHeader>
 
-      <textarea
-        placeholder="Review"
-        value={formData.content}
-        onChange={(e) =>
-          setFormData({
-            ...formData,
-            content: e.target.value,
-          })
-        }
-      />
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            placeholder="Review title"
+            value={formData.title}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                title: e.target.value,
+              })
+            }
+          />
 
-      <button type="submit">Submit Review</button>
-    </form>
+          <Textarea
+            placeholder="Share your experience..."
+            value={formData.content}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                content: e.target.value,
+              })
+            }
+          />
+
+          <button type="submit">Submit Review</button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }
