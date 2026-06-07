@@ -1,5 +1,10 @@
 import { useTrendingAPIs } from "../hooks/use-trending-apis";
 
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Star, MessageSquare } from "lucide-react";
+import { Link } from "react-router-dom";
+
 export default function TrendingSection() {
   const { data, isLoading, error } = useTrendingAPIs();
 
@@ -10,10 +15,7 @@ export default function TrendingSection() {
   if (error) {
     return <div className="p-10">Something went wrong</div>;
   }
-  console.log("DATA:", data);
-  console.log("ERROR:", error);
-  console.log("LOADING:", isLoading);
-  
+
   if (!data) {
     return <div>No data</div>;
   }
@@ -24,13 +26,34 @@ export default function TrendingSection() {
 
       <div className="space-y-4">
         {data?.apis?.map((api) => (
-          <div key={api._id} className="rounded-xl border p-4">
-            <h3 className="font-semibold">{api.name}</h3>
+          <Link key={api._id} to={`/apis/${api._id}`}>
+            <Card className="transition-all hover:scale-[1.02] hover:shadow-lg" cursor-pointer>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold">{api.name}</h3>
 
-            <p>Rating: {api.averageRating}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {api.category}
+                    </p>
+                    <Badge>{api.communityStatus}</Badge>
+                  </div>
 
-            <p>Reviews: {api.reviewCount}</p>
-          </div>
+                  <div className="text-right">
+                    <div className="flex items-center gap-1">
+                      <Star size={16} />
+                      {api.averageRating}
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                      <MessageSquare size={16} />
+                      {api.reviewCount}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
     </section>
