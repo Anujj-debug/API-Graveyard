@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useAPI } from "@/features/registry/hooks/use-api";
 import ReviewsSection from "@/features/reviews/components/reviews-section";
 import ReviewForm from "@/features/reviews/components/review-form";
+import StatusReportSection from "@/features/status-reports/components/status-report-section";
+import StatusReportForm from "@/features/status-reports/components/status-report-form";
 
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -165,6 +167,10 @@ export default function APIDetailsPage() {
             </Card>
           </motion.div>
         </motion.div>
+
+
+        <StatusReportSection apiId={id} />
+        <StatusReportForm apiId={id} />
 
         {/* Review Form */}
         <ReviewForm apiId={id} />

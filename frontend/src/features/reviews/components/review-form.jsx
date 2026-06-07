@@ -16,6 +16,19 @@ export default function ReviewForm({ apiId }) {
   });
 
   const mutation = useCreateReview();
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+  return (
+    <Card className="mt-10">
+      <CardContent className="p-6 text-center">
+        <p className="text-center text-muted-foreground">
+          🔒 Login required to submit reviews
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
 
   const handleSubmit = (e) => {
     e.preventDefault();

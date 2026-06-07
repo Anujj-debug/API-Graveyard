@@ -3,6 +3,7 @@ import { Star, AlertTriangle } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import { formatDistanceToNow } from "date-fns";
 
 export default function ReviewsSection({ apiId }) {
   const { data, isLoading, error } = useReviews(apiId);
@@ -14,7 +15,7 @@ export default function ReviewsSection({ apiId }) {
   }
 
   return (
-    <section className="mt-10">
+    <section className="mt-10 text-white">
       <div className="mb-6">
         <h2 className="text-3xl font-bold">Reviews</h2>
 
@@ -51,15 +52,27 @@ export default function ReviewsSection({ apiId }) {
                       <div>
                         <h3 className="font-semibold">{review.title}</h3>
 
-                        <p className="text-sm text-muted-foreground">
-                          {review.user?.username}
-                        </p>
+                        <div>
+                          <p className="text-sm text-muted-foreground">
+                            {review.user?.username}
+                          </p>
+
+                          <p className="text-xs text-muted-foreground">
+                            {formatDistanceToNow(new Date(review.createdAt), {
+                              addSuffix: true,
+                            })}
+                          </p>
+                        </div>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-1">
-                      {Array.from({ length: review.rating }).map((_, index) => (
-                        <Star key={index} size={16} fill="currentColor" />
+                      {Array.from({ length: 5 }).map((_, index) => (
+                        <Star
+                          key={index}
+                          size={16}
+                          fill={index < review.rating ? "currentColor" : "none"}
+                        />
                       ))}
                     </div>
                   </div>
@@ -68,11 +81,11 @@ export default function ReviewsSection({ apiId }) {
 
                   <div className="mt-4 flex flex-wrap gap-4">
                     <span className="text-sm text-muted-foreground">
-                      Pain Level: {review.painLevel}/5
+                      😖 Pain Level: {review.painLevel}/5
                     </span>
 
                     {review.isComplaint && (
-                      <span className="flex items-center gap-1 text-sm">
+                      <span className="flex items-center gap-1 rounded-full bg-red-500/20 px-2 py-1 text-sm text-red-400">
                         <AlertTriangle size={14} />
                         Complaint
                       </span>
