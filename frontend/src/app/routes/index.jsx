@@ -5,6 +5,8 @@ import HomePage from "@/pages/home-page";
 import APIDetailsPage from "@/pages/api-details-page";
 import LoginPage from "@/pages/login-page";
 import SubmitAPIPage from "@/pages/submit-api-page";
+import ProfilePage from "@/pages/profile-page";
+import RegisterPage from "@/pages/register-page";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
       {
         path: "submit-api",
         element: <SubmitAPIPage />,
+      },
+      {
+        path: "profile",
+        element: <ProfilePage />,
+      },
+      {
+        path: "register",
+        element: <RegisterPage />,
       },
     ],
   },
