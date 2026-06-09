@@ -1,5 +1,6 @@
 import { useProfile } from "@/features/users/hooks/use-profile";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { PlusCircle, MessageSquare, Activity } from "lucide-react";
 
 export default function ProfilePage() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -54,6 +55,41 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
       </div>
+
+      <Card className="mt-8">
+        <CardHeader>
+          <CardTitle>Recent Activity</CardTitle>
+        </CardHeader>
+
+        <CardContent>
+          <div className="space-y-3">
+            {data.activity.length === 0 ? (
+              <p className="text-muted-foreground">No activity yet.</p>
+            ) : (
+              data.activity.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 rounded-lg border p-3"
+                >
+                  {item.type === "api" && <PlusCircle size={18} />}
+
+                  {item.type === "review" && <MessageSquare size={18} />}
+
+                  {item.type === "report" && <Activity size={18} />}
+
+                  <div>
+                    <p className="font-medium">{item.text}</p>
+
+                    <p className="text-xs text-muted-foreground">
+                      {new Date(item.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

@@ -13,19 +13,62 @@ export const getProfileService = async (userId) => {
   const apisCount = await API.countDocuments({
     addedBy: userId,
   });
-
   const reviewsCount = await Review.countDocuments({
     user: userId,
   });
-
   const statusReportsCount = await StatusReport.countDocuments({
     user: userId,
   });
+  const recentApis = await API.find({
+    addedBy: userId,
+  })
+    .select("name createdAt")
+    .sort({ createdAt: -1 })
+    .limit(5);
+
+  const recentReviews = await Review.find({
+    user: userId,
+  })
+    .populate("api", "name")
+    .select("rating createdAt api")
+    .sort({ createdAt: -1 })
+    .limit(5);
+
+  const recentReports = await StatusReport.find({
+    user: userId,
+  })
+    .populate("api", "name")
+    .select("status createdAt api")
+    .sort({ createdAt: -1 })
+    .limit(5);
+
+  const activity = [
+    ...recentApis.map((api) => ({
+      type: "api",
+      text: `Submitted ${api.name}`,
+      createdAt: api.createdAt,
+    })),
+
+    ...recentReviews.map((review) => ({
+      type: "review",
+      text: `Reviewed ${review.api?.name}`,
+      createdAt: review.createdAt,
+    })),
+
+    ...recentReports.map((report) => ({
+      type: "report",
+      text: `Reported ${report.api?.name} as ${report.status}`,
+      createdAt: report.createdAt,
+    })),
+  ]
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, 10);
 
   return {
     ...user.toObject(),
     apisCount,
     reviewsCount,
     statusReportsCount,
+    activity,
   };
 };
