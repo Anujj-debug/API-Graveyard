@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Star, Globe, FileText, MessageSquare, Activity } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { User, Calendar } from "lucide-react";
 
 export default function APIDetailsPage() {
   const { id } = useParams();
@@ -54,6 +55,19 @@ export default function APIDetailsPage() {
                   <p className="mt-2 text-muted-foreground">
                     {data.description}
                   </p>
+                  <div className="mt-3 flex flex-col gap-2 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <User size={14} />
+                      <span>Submitted by {data.addedBy?.username}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <Calendar size={14} />
+                      <span>
+                        {new Date(data.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </CardHeader>
@@ -167,7 +181,6 @@ export default function APIDetailsPage() {
             </Card>
           </motion.div>
         </motion.div>
-
 
         <StatusReportSection apiId={id} />
         <StatusReportForm apiId={id} />

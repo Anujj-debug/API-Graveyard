@@ -7,11 +7,14 @@ import LoginPage from "@/pages/login-page";
 import SubmitAPIPage from "@/pages/submit-api-page";
 import ProfilePage from "@/pages/profile-page";
 import RegisterPage from "@/pages/register-page";
+import NotFoundPage from "@/pages/not-found-page";
+import ErrorPage from "@/pages/error-page";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -38,6 +41,10 @@ const router = createBrowserRouter([
         element: <RegisterPage />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
 

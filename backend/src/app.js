@@ -21,7 +21,4 @@ app.use("/api/v1/apis", apiRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/stats", statsRoutes);
 
-
-// Global error handler
-
 export default app;

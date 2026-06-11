@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useLogin } from "@/features/auth/hooks/use-login";
 import { Link } from "react-router-dom";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const mutation = useLogin();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,7 +23,7 @@ export default function LoginPage() {
         onSuccess: (data) => {
           localStorage.setItem("token", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
-          window.location.href = "/";
+          navigate("/");
           console.log("LOGIN SUCCESS", data);
         },
       },
@@ -37,20 +41,18 @@ export default function LoginPage() {
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <input
+            <Input
               type="email"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-md border p-3"
             />
 
-            <input
+            <Input
               type="password"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-md border p-3"
             />
 
             {mutation.isError && (
@@ -59,13 +61,13 @@ export default function LoginPage() {
               </p>
             )}
 
-            <button
+            <Button
               type="submit"
               disabled={mutation.isPending}
-              className="w-full rounded-md bg-black px-4 py-3 text-white"
+              className="w-full"
             >
               {mutation.isPending ? "Logging in..." : "Login"}
-            </button>
+            </Button>
           </form>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
