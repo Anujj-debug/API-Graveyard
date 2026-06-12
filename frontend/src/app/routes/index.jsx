@@ -9,6 +9,7 @@ import ProfilePage from "@/pages/profile-page";
 import RegisterPage from "@/pages/register-page";
 import NotFoundPage from "@/pages/not-found-page";
 import ErrorPage from "@/pages/error-page";
+import APIsPage from "@/pages/apis-page";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "apis",
+        element: <APIsPage />,
       },
       {
         path: "apis/:id",

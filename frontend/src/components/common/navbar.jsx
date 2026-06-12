@@ -13,6 +13,7 @@ export default function Navbar() {
 
         <nav className="flex items-center gap-6">
           <Link to="/">Home</Link>
+          <Link to="/apis">Browse APIs</Link>
           <Link to="/submit-api">Submit API</Link>
           {token ? (
             <>
