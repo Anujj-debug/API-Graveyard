@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { useAuth } from "@/context/auth-context";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const mutation = useLogin();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
@@ -21,10 +24,9 @@ export default function LoginPage() {
       },
       {
         onSuccess: (data) => {
-          localStorage.setItem("token", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user));
+          login(data.user, data.token);
+          toast.success("Logged in successfully");
           navigate("/");
-          console.log("LOGIN SUCCESS", data);
         },
       },
     );

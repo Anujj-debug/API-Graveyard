@@ -26,7 +26,13 @@ export default function ReviewsSection({ apiId }) {
       </div>
 
       {data.reviews.length === 0 ? (
-        <p>No reviews yet.</p>
+        <Card>
+          <CardContent className="p-6 text-center">
+            <p className="text-muted-foreground">
+              No reviews yet. Be the first to review this API.
+            </p>
+          </CardContent>
+        </Card>
       ) : (
         <div className="space-y-4">
           {data.reviews.map((review) => (

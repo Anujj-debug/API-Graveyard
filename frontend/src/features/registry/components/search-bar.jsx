@@ -27,6 +27,11 @@ export default function SearchBar() {
       />
 
       {isLoading && <p className="mt-2">Searching...</p>}
+      {debouncedSearch && data?.apis?.length === 0 && !isLoading && (
+        <div className="mt-4 rounded-lg border p-4 text-center">
+          No APIs found.
+        </div>
+      )}
 
       {data?.apis?.length > 0 && (
         <div className="mt-4 rounded-lg border">

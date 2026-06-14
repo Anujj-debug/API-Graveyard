@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useAPI } from "@/features/registry/hooks/use-api";
 import ReviewsSection from "@/features/reviews/components/reviews-section";
 import ReviewForm from "@/features/reviews/components/review-form";
@@ -11,14 +11,25 @@ import { Star, Globe, FileText, MessageSquare, Activity } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { User, Calendar } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function APIDetailsPage() {
   const { id } = useParams();
   const { data, isLoading, error } = useAPI(id);
 
   if (isLoading) {
-    return <div className="p-10">Loading...</div>;
-  }
+  return (
+    <div className="mx-auto max-w-5xl p-10">
+      <Skeleton className="mb-6 h-64 w-full" />
+
+      <div className="grid gap-4 md:grid-cols-3">
+        <Skeleton className="h-32 w-full" />
+        <Skeleton className="h-32 w-full" />
+        <Skeleton className="h-32 w-full" />
+      </div>
+    </div>
+  );
+}
   if (error) {
     return <div className="p-10">Something went wrong</div>;
   }
@@ -181,6 +192,37 @@ export default function APIDetailsPage() {
             </Card>
           </motion.div>
         </motion.div>
+
+        {/* Alternatives */}
+        {data.alternatives?.length > 0 && (
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle>Alternatives</CardTitle>
+            </CardHeader>
+
+            <CardContent>
+              <div className="grid gap-3 md:grid-cols-2">
+                {data.alternatives.map((alternative) => (
+                  <Link
+                    key={alternative._id}
+                    to={`/apis/${alternative._id}`}
+                    className="rounded-lg border p-4 transition hover:bg-muted"
+                  >
+                    <h3 className="font-semibold">{alternative.name}</h3>
+
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {alternative.category}
+                    </p>
+
+                    <Badge variant="outline" className="mt-2">
+                      {alternative.officialStatus}
+                    </Badge>
+                  </Link>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         <StatusReportSection apiId={id} />
         <StatusReportForm apiId={id} />

@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { useCreateStatusReport } from "../hooks/use-create-status-report";
 import { Card, CardContent } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export default function StatusReportForm({ apiId }) {
   const mutation = useCreateStatusReport();
@@ -34,6 +35,13 @@ export default function StatusReportForm({ apiId }) {
     mutation.mutate({
       apiId,
       reportData: formData,
+    }, {
+      onSuccess: () => {
+        toast.success("Status report submitted successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to submit status report.");
+      }
     });
   };
 

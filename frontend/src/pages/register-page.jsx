@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import {toast} from "sonner";
 
 export default function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -23,6 +24,7 @@ export default function RegisterPage() {
       },
       {
         onSuccess: () => {
+          toast.success("Account created successfully! Please login.");
           navigate("/login");
         },
       },

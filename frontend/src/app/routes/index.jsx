@@ -10,6 +10,7 @@ import RegisterPage from "@/pages/register-page";
 import NotFoundPage from "@/pages/not-found-page";
 import ErrorPage from "@/pages/error-page";
 import APIsPage from "@/pages/apis-page";
+import ProtectedRoute from "@/features/auth/components/protected-route";
 
 const router = createBrowserRouter([
   {
@@ -35,11 +36,19 @@ const router = createBrowserRouter([
       },
       {
         path: "submit-api",
-        element: <SubmitAPIPage />,
+        element: (
+          <ProtectedRoute>
+            <SubmitAPIPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "profile",
-        element: <ProfilePage />,
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "register",

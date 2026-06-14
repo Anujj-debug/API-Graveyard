@@ -56,7 +56,13 @@ export default function StatusReportSection({ apiId }) {
           <h3 className="mb-4 text-xl font-semibold">Recent Reports</h3>
 
           {data.reports.length === 0 ? (
-            <p>No reports yet.</p>
+            <Card>
+              <CardContent className="p-6 text-center">
+                <p className="text-muted-foreground">
+                  No status reports submitted yet.
+                </p>
+              </CardContent>
+            </Card>
           ) : (
             <div className="space-y-4">
               {data.reports.map((report) => (

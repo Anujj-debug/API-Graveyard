@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus } from "lucide-react";
+import {toast} from "sonner";
 
 export default function SubmitAPIForm() {
   const token = localStorage.getItem("token");
@@ -36,6 +37,7 @@ export default function SubmitAPIForm() {
 
     mutation.mutate(payload, {
       onSuccess: (data) => {
+        toast.success("API submitted successfully!");
         navigate(`/apis/${data.api._id}`);
       },
     });

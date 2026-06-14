@@ -1,6 +1,7 @@
 import { useProfile } from "@/features/users/hooks/use-profile";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PlusCircle, MessageSquare, Activity } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ProfilePage() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -8,8 +9,18 @@ export default function ProfilePage() {
   const { data, isLoading, error } = useProfile(user._id);
 
   if (isLoading) {
-    return <div className="p-10">Loading...</div>;
-  }
+  return (
+    <div className="mx-auto max-w-5xl p-10">
+      <Skeleton className="mb-6 h-40 w-full" />
+
+      <div className="grid gap-4 md:grid-cols-3">
+        <Skeleton className="h-32 w-full" />
+        <Skeleton className="h-32 w-full" />
+        <Skeleton className="h-32 w-full" />
+      </div>
+    </div>
+  );
+}
 
   if (error) {
     return <div className="p-10">Failed to load profile</div>;

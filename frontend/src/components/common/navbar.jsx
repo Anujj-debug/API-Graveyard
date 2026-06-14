@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ThemeToggle from "./theme-toggle";
+import { useAuth } from "@/context/auth-context";
 
 export default function Navbar() {
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user, logout, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <header className="border-b">
@@ -15,7 +17,7 @@ export default function Navbar() {
           <Link to="/">Home</Link>
           <Link to="/apis">Browse APIs</Link>
           <Link to="/submit-api">Submit API</Link>
-          {token ? (
+          {isAuthenticated ? (
             <>
               <Link to="/profile" className="font-medium">
                 {user?.username}
@@ -23,9 +25,8 @@ export default function Navbar() {
 
               <button
                 onClick={() => {
-                  localStorage.removeItem("token");
-                  localStorage.removeItem("user");
-                  window.location.reload();
+                  logout();
+                  navigate("/");
                 }}
               >
                 Logout
@@ -34,10 +35,10 @@ export default function Navbar() {
           ) : (
             <>
               <Link to="/login">Login</Link>
-
               <Link to="/register">Register</Link>
             </>
           )}
+          <ThemeToggle />
         </nav>
       </div>
     </header>

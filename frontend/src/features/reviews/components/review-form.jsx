@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 export default function ReviewForm({ apiId }) {
   const [errorMessage, setErrorMessage] = useState("");
@@ -51,8 +52,10 @@ export default function ReviewForm({ apiId }) {
             painLevel: 1,
             isComplaint: false,
           });
+          toast.success("Review submitted successfully!");
         },
         onError: (error) => {
+          toast.error("Failed to submit review.");
           setErrorMessage(
             error.response?.data?.message || "Something went wrong",
           );

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAPIs } from "@/features/registry/hooks/use-apis";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function APIsPage() {
   const [category, setCategory] = useState("");
@@ -42,6 +43,22 @@ export default function APIsPage() {
     setPage(1);
   }, [debouncedSearch, category, status]);
 
+  if (isLoading) {
+    return (
+      <div className="mx-auto max-w-6xl p-10">
+        <div className="space-y-4">
+          {[...Array(5)].map((_, index) => (
+            <div key={index} className="rounded-xl border p-5">
+              <Skeleton className="h-6 w-40" />
+              <Skeleton className="mt-3 h-4 w-full" />
+              <Skeleton className="mt-2 h-4 w-3/4" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   if (error) {
     return <div className="p-10">Failed to load APIs </div>;
   }
@@ -57,15 +74,13 @@ export default function APIsPage() {
         placeholder="Search APIs..."
         value={search}
         onChange={(e) => {
-          {
-            isLoading && (
-              <p className="text-sm text-muted-foreground">Searching...</p>
-            );
-          }
           setSearch(e.target.value);
         }}
         className="mb-4"
       />
+      {isLoading && (
+        <p className="mb-4 text-sm text-muted-foreground">Searching...</p>
+      )}
       <div className="mb-8 grid gap-4 md:grid-cols-2">
         <select
           value={category}
@@ -130,6 +145,16 @@ export default function APIsPage() {
             </div>
           </Link>
         ))}
+
+        {!isLoading && data?.apis?.length === 0 && (
+          <div className="rounded-xl border p-10 text-center">
+            <h3 className="text-lg font-semibold">No APIs Found</h3>
+
+            <p className="mt-2 text-muted-foreground">
+              Try changing your search term or filters.
+            </p>
+          </div>
+        )}
       </div>
       {/* Pagination Controls */}
       <div className="mt-8 flex items-center justify-center gap-4">

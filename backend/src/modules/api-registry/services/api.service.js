@@ -64,21 +64,22 @@ export const getAllAPIsService = async (queryParams) => {
 };
 
 export const getSingleAPIService = async (apiId) => {
-  const api = await API.findById(apiId).populate("addedBy", "username email");
+  const api = await API.findById(apiId)
+    .populate("addedBy", "username email")
+    .populate("alternatives", "name officialStatus category");
+
   if (!api) {
     throw new Error("API not found");
   }
   return api;
 };
+export const getTrendingAPIsService = async () => {
+  const apis = await API.find()
+    .sort({
+      reviewCount: -1,
+      averageRating: -1,
+    })
+    .limit(10);
 
-export const getTrendingAPIsService =
-  async () => {
-    const apis = await API.find()
-      .sort({
-        reviewCount: -1,
-        averageRating: -1,
-      })
-      .limit(10);
-
-    return apis;
-  };
+  return apis;
+};
