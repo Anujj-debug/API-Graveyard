@@ -5,8 +5,7 @@ import { useCreateAPI } from "../hooks/use-create-api";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Plus, Link2, Globe, FileText, Building2, ShieldCheck } from "lucide-react";
+import { Plus, Link2, Globe, FileText, Building2, ShieldCheck, Tag } from "lucide-react";
 import { toast } from "sonner";
 import { API_CATEGORY_OPTIONS, API_STATUS_OPTIONS } from "../constants/api-options";
 
@@ -46,30 +45,26 @@ export default function SubmitAPIForm() {
 
   if (!token) {
     return (
-      <Card className="mt-8 border-dashed bg-muted/20">
-        <CardContent className="p-8 text-center">
-          <ShieldCheck className="mx-auto mb-3 h-10 w-10 text-slate-600" />
-          <h2 className="text-xl font-semibold text-slate-900">Sign in required</h2>
-          <p className="mt-2 text-sm text-slate-600">Please log in to submit a new API listing and help keep the directory up to date.</p>
-        </CardContent>
-      </Card>
+      <div className="rounded-3xl border border-dashed border-border bg-card p-16 text-center shadow-sm">
+        <ShieldCheck className="mx-auto mb-4 h-16 w-16 text-muted-foreground opacity-50" />
+        <h2 className="text-3xl font-bold text-foreground">Sign in required</h2>
+        <p className="mt-3 text-lg text-muted-foreground">Please log in to submit a new API listing and help keep the directory up to date.</p>
+      </div>
     );
   }
 
   return (
-    <Card className="mt-8 shadow-sm">
-      <CardHeader className="border-b">
-        <CardTitle>Submit a New API</CardTitle>
-        <CardDescription>
-          Share an API with the community. Add the essential details so others can discover and evaluate it quickly.
-        </CardDescription>
-      </CardHeader>
+    <div className="rounded-3xl border border-border bg-card shadow-lg overflow-hidden">
+      <div className="border-b border-border bg-muted/20 px-8 py-6">
+        <h2 className="text-2xl font-bold text-foreground">API Details</h2>
+        <p className="text-muted-foreground mt-1">Please provide accurate information to help users understand this API.</p>
+      </div>
 
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2 md:col-span-2">
-              <label className="flex items-center gap-2 text-sm font-medium"><FileText className="h-4 w-4 text-slate-500" /> API Name</label>
+      <div className="p-8">
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-3 md:col-span-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-foreground"><FileText className="h-4 w-4 text-primary" /> API Name</label>
               <Input
                 placeholder="eg. Stripe"
                 value={formData.name}
@@ -79,13 +74,14 @@ export default function SubmitAPIForm() {
                     name: e.target.value,
                   })
                 }
+                className="h-12 rounded-xl bg-secondary/30 border-border"
               />
             </div>
 
-            <div className="space-y-2 md:col-span-2">
-              <label className="flex items-center gap-2 text-sm font-medium"><FileText className="h-4 w-4 text-slate-500" /> Description</label>
+            <div className="space-y-3 md:col-span-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-foreground"><FileText className="h-4 w-4 text-primary" /> Description</label>
               <Textarea
-                placeholder="Describe what this API does..."
+                placeholder="Describe what this API does in a few sentences..."
                 value={formData.description}
                 onChange={(e) =>
                   setFormData({
@@ -93,13 +89,14 @@ export default function SubmitAPIForm() {
                     description: e.target.value,
                   })
                 }
+                className="min-h-[120px] rounded-xl bg-secondary/30 border-border resize-y"
               />
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-sm font-medium"><Building2 className="h-4 w-4 text-slate-500" /> Category</label>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-3">
+              <label className="flex items-center gap-2 text-sm font-semibold text-foreground"><Tag className="h-4 w-4 text-primary" /> Category</label>
               <select
                 value={formData.category}
                 onChange={(e) =>
@@ -108,7 +105,7 @@ export default function SubmitAPIForm() {
                     category: e.target.value,
                   })
                 }
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
+                className="h-12 w-full rounded-xl border border-border bg-secondary/30 px-4 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
               >
                 {API_CATEGORY_OPTIONS.map((option) => (
                   <option key={option} value={option}>
@@ -118,8 +115,8 @@ export default function SubmitAPIForm() {
               </select>
             </div>
 
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-sm font-medium"><Building2 className="h-4 w-4 text-slate-500" /> Company</label>
+            <div className="space-y-3">
+              <label className="flex items-center gap-2 text-sm font-semibold text-foreground"><Building2 className="h-4 w-4 text-primary" /> Company / Creator</label>
               <Input
                 placeholder="eg. Stripe Inc."
                 value={formData.company}
@@ -129,15 +126,16 @@ export default function SubmitAPIForm() {
                     company: e.target.value,
                   })
                 }
+                className="h-12 rounded-xl bg-secondary/30 border-border"
               />
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-sm font-medium"><Globe className="h-4 w-4 text-slate-500" /> Website URL</label>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-3">
+              <label className="flex items-center gap-2 text-sm font-semibold text-foreground"><Globe className="h-4 w-4 text-primary" /> Website URL</label>
               <Input
-                placeholder=" eg. https://stripe.com"
+                placeholder="eg. https://stripe.com"
                 value={formData.websiteUrl}
                 onChange={(e) =>
                   setFormData({
@@ -145,11 +143,12 @@ export default function SubmitAPIForm() {
                     websiteUrl: e.target.value,
                   })
                 }
+                className="h-12 rounded-xl bg-secondary/30 border-border"
               />
             </div>
 
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-sm font-medium"><Link2 className="h-4 w-4 text-slate-500" /> Docs URL</label>
+            <div className="space-y-3">
+              <label className="flex items-center gap-2 text-sm font-semibold text-foreground"><Link2 className="h-4 w-4 text-primary" /> Documentation URL</label>
               <Input
                 placeholder="eg. https://docs.stripe.com"
                 value={formData.docsUrl}
@@ -159,13 +158,14 @@ export default function SubmitAPIForm() {
                     docsUrl: e.target.value,
                   })
                 }
+                className="h-12 rounded-xl bg-secondary/30 border-border"
               />
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Pricing Model</label>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground">Pricing Model</label>
               <select
                 value={formData.pricingModel}
                 onChange={(e) =>
@@ -174,7 +174,7 @@ export default function SubmitAPIForm() {
                     pricingModel: e.target.value,
                   })
                 }
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
+                className="h-12 w-full rounded-xl border border-border bg-secondary/30 px-4 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
               >
                 <option value="Free">Free</option>
                 <option value="Freemium">Freemium</option>
@@ -185,8 +185,8 @@ export default function SubmitAPIForm() {
               </select>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Official Status</label>
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground">Official Status</label>
               <select
                 value={formData.officialStatus}
                 onChange={(e) =>
@@ -195,7 +195,7 @@ export default function SubmitAPIForm() {
                     officialStatus: e.target.value,
                   })
                 }
-                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
+                className="h-12 w-full rounded-xl border border-border bg-secondary/30 px-4 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
               >
                 {API_STATUS_OPTIONS.map((option) => (
                   <option key={option} value={option}>
@@ -207,23 +207,25 @@ export default function SubmitAPIForm() {
           </div>
 
           {formData.name && (
-            <div className="rounded-lg border bg-muted/40 px-4 py-3 text-sm text-slate-700">
-              Generated slug: <span className="font-medium text-slate-900">{formData.name.toLowerCase().replaceAll(" ", "-")}</span>
+            <div className="rounded-xl border border-primary/20 bg-primary/5 px-5 py-4 text-sm text-foreground">
+              Generated slug: <span className="font-bold text-primary">{formData.name.toLowerCase().replaceAll(" ", "-")}</span>
             </div>
           )}
 
           {mutation.isError && (
-            <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
+            <p className="rounded-xl border border-destructive/50 bg-destructive/10 px-5 py-4 text-sm text-destructive font-medium">
               {mutation.error?.response?.data?.message || "Failed to submit API. Please try again."}
             </p>
           )}
 
-          <Button type="submit" disabled={mutation.isPending} className="w-full">
-            <Plus className="mr-2 h-4 w-4" />
-            {mutation.isPending ? "Submitting..." : "Submit API"}
-          </Button>
+          <div className="pt-4 border-t border-border">
+            <Button type="submit" size="lg" disabled={mutation.isPending} className="w-full sm:w-auto px-8 rounded-full shadow-md">
+              <Plus className="mr-2 h-5 w-5" />
+              {mutation.isPending ? "Submitting..." : "Submit API Listing"}
+            </Button>
+          </div>
         </form>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 }
