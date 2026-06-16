@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useCreateReview } from "../hooks/use-create-review";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
@@ -21,9 +21,9 @@ export default function ReviewForm({ apiId }) {
 
   if (!token) {
   return (
-    <Card className="mt-10">
+    <Card className="shadow-sm">
       <CardContent className="p-6 text-center">
-        <p className="text-center text-muted-foreground">
+        <p className="text-center text-slate-600">
           🔒 Login required to submit reviews
         </p>
       </CardContent>
@@ -65,15 +65,18 @@ export default function ReviewForm({ apiId }) {
   };
 
   return (
-    <Card className="mt-10">
-      <CardHeader>
+    <Card className="shadow-sm">
+      <CardHeader className="border-b">
         <CardTitle>Write a Review</CardTitle>
+        <CardDescription>
+          Share rating, pain level, and a short experience note.
+        </CardDescription>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="mb-2 block text-sm">Rating</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">Rating</label>
 
             <select
               value={formData.rating}
@@ -83,7 +86,7 @@ export default function ReviewForm({ apiId }) {
                   rating: Number(e.target.value),
                 })
               }
-              className="w-full rounded-md border bg-background p-2"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
             >
               <option value={1}>1 Star</option>
               <option value={2}>2 Stars</option>
@@ -93,7 +96,7 @@ export default function ReviewForm({ apiId }) {
             </select>
           </div>
           <div>
-            <label className="mb-2 block text-sm">Pain Level</label>
+            <label className="mb-2 block text-sm font-medium text-slate-700">Pain Level</label>
 
             <select
               value={formData.painLevel}
@@ -103,7 +106,7 @@ export default function ReviewForm({ apiId }) {
                   painLevel: Number(e.target.value),
                 })
               }
-              className="w-full rounded-md border bg-background p-2"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
             >
               <option value={1}>1 - Very Easy</option>
               <option value={2}>2 - Easy</option>
@@ -133,7 +136,7 @@ export default function ReviewForm({ apiId }) {
               })
             }
           />
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 rounded-lg border bg-slate-50 px-3 py-2">
             <input
               type="checkbox"
               checked={formData.isComplaint}
@@ -144,15 +147,14 @@ export default function ReviewForm({ apiId }) {
                 })
               }
             />
-
-            <label>This review is a complaint</label>
+            <label className="text-sm text-slate-700">This review is a complaint</label>
           </div>
 
           {errorMessage && (
-            <p className="text-sm text-red-500">{errorMessage}</p>
+            <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{errorMessage}</p>
           )}
 
-          <Button type="submit">Submit Review</Button>
+          <Button type="submit" className="w-full sm:w-auto">Submit Review</Button>
         </form>
       </CardContent>
     </Card>

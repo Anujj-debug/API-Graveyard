@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import { useCreateStatusReport } from "../hooks/use-create-status-report";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { toast } from "sonner";
 
 export default function StatusReportForm({ apiId }) {
@@ -19,9 +19,9 @@ export default function StatusReportForm({ apiId }) {
 
   if (!token) {
   return (
-    <Card className="mb-8">
+    <Card className="shadow-sm">
       <CardContent className="p-6 text-center">
-        <p className="text-center text-muted-foreground">
+        <p className="text-center text-slate-600">
           🔒 Login required to submit status reports
         </p>
       </CardContent>
@@ -46,9 +46,15 @@ export default function StatusReportForm({ apiId }) {
   };
 
   return (
-    <div className="mb-8 rounded-xl border bg-card p-6">
-      <h3 className="mb-4 text-xl font-semibold">Submit Status Report</h3>
+    <Card className="shadow-sm">
+      <CardHeader className="border-b">
+        <CardTitle>Submit Status Report</CardTitle>
+        <CardDescription>
+          Share the current state of the API with the community.
+        </CardDescription>
+      </CardHeader>
 
+      <CardContent className="p-6">
       <form onSubmit={handleSubmit} className="space-y-4">
         <select
           value={formData.status}
@@ -58,7 +64,7 @@ export default function StatusReportForm({ apiId }) {
               status: e.target.value,
             })
           }
-          className="w-full rounded-md border p-2"
+          className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow-sm outline-none transition-colors focus:border-ring focus:ring-2 focus:ring-ring/30"
         >
           <option>Active</option>
           <option>Stable</option>
@@ -92,8 +98,9 @@ export default function StatusReportForm({ apiId }) {
           }
         />
 
-        <Button type="submit">Submit Status Report</Button>
+        <Button type="submit" className="w-full sm:w-auto">Submit Status Report</Button>
       </form>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
