@@ -1,16 +1,46 @@
-# React + Vite
+# API Graveyard - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The frontend for API Graveyard is a modern, responsive web application built with React (Vite), Tailwind CSS, Framer Motion, and React Router. It provides a premium UI for users to browse, review, and report on the health of various APIs.
 
-Currently, two official plugins are available:
+## Routing Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Routing is handled via `react-router-dom` in `src/app/routes/index.jsx`. The application utilizes a centralized `RootLayout` which persists the navigation bar and footer across pages.
 
-## React Compiler
+### Public Routes
+These pages are accessible to all visitors:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **`/` (Home Page)**
+  - Displays the Hero section, platform statistics, and a grid of Trending APIs.
+- **`/apis` (Directory Page)**
+  - A comprehensive, paginated directory of all tracked APIs. Includes real-time search, category filtering, and status filtering via a sticky glassmorphism control bar.
+- **`/apis/:id` (Details Page)**
+  - The core detail view for a specific API. Displays metadata, alternative APIs, and interactive tabs for submitting/viewing **Status Reports** and **Community Reviews**.
+- **`/login` (Authentication)**
+  - Standard user login flow.
+- **`/register` (Authentication)**
+  - Standard user registration flow.
 
-## Expanding the ESLint configuration
+### Protected Routes
+These pages are wrapped in a `<ProtectedRoute>` component and require a valid, authenticated user session (JWT token).
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **`/submit-api` (Submit API Page)**
+  - Allows authenticated users to contribute new APIs to the directory.
+- **`/profile` (User Dashboard)**
+  - A personalized dashboard showing the user's account details, contribution metrics (APIs submitted, reviews, reports), and a timeline of their recent activity.
+
+### Catch-All Routes
+- **`*` (Not Found)**
+  - 404 Error page for invalid routes.
+
+## Theming & Styling
+The application uses **Tailwind CSS** with a robust CSS variable system (`index.css`) for theming. 
+- Colors are semantically defined (`primary`, `secondary`, `muted`, `card`, `border`).
+- **Dark Mode** is fully supported via the `next-themes` provider.
+- Animations and transitions are powered by **Framer Motion**.
+
+## Running the App
+Make sure your backend is running, then start the Vite development server:
+```bash
+npm install
+npm run dev
+```
