@@ -2,6 +2,14 @@
 
 A community-driven API registry that helps developers discover, review, and track APIs. Users can browse APIs, submit new entries, share reviews, report API status changes, and explore alternative services.
 
+## Live Demo
+
+Frontend:
+https://api-graveyard.vercel.app
+
+Backend:
+https://api-graveyard-backend.onrender.com
+
 ## Features
 
 * Authentication & Authorization
